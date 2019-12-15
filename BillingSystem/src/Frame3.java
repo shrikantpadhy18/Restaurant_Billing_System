@@ -16,12 +16,13 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class Frame3 {
 
 	JFrame frame;
 	private JTextField UserNameTextField;
-	private JTextField PasswordTextField;
+	private JPasswordField PasswordTextField;
 
 	/**
 	 * Launch the application.
@@ -74,23 +75,18 @@ public class Frame3 {
 		
 		JLabel LabelUserName = new JLabel("UserName");
 		LabelUserName.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
-		LabelUserName.setBounds(12, 83, 131, 38);
+		LabelUserName.setBounds(12, 108, 131, 38);
 		panel_1.add(LabelUserName);
 		
 		UserNameTextField = new JTextField();
-		UserNameTextField.setBounds(138, 88, 212, 32);
+		UserNameTextField.setBounds(138, 113, 212, 32);
 		panel_1.add(UserNameTextField);
 		UserNameTextField.setColumns(10);
 		
 		JLabel LabelPassword = new JLabel("PassWord");
 		LabelPassword.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
-		LabelPassword.setBounds(12, 161, 98, 32);
+		LabelPassword.setBounds(12, 174, 98, 32);
 		panel_1.add(LabelPassword);
-		
-		PasswordTextField = new JTextField();
-		PasswordTextField.setBounds(138, 163, 212, 32);
-		panel_1.add(PasswordTextField);
-		PasswordTextField.setColumns(10);
 		
 		JButton Login = new JButton("Login");
 		Login.addActionListener(new ActionListener() {
@@ -105,13 +101,21 @@ public class Frame3 {
 					ResultSet rs=stmt.executeQuery("SELECT * from register WHERE username='" + username + "' and password='"+password+"'");
 					while(rs.next())
 						count+=1;
-					if(count>0) {
+					if(count>0 && username.equals("ADMIN") && password.equals("ADMIN")) {
+						JOptionPane.showMessageDialog(new JFrame(),"Login has been successfull"); 
+						frame.setVisible(false);
+						AdminView1 lo1=new AdminView1();
+						lo1.frame.setVisible(true);
+					}
+					else if(count>0 ) {
 						JOptionPane.showMessageDialog(new JFrame(),"Login has been successfull"); 
 						frame.setVisible(false);
 						CustomerView lo=new CustomerView();
 						lo.frame.setVisible(true);
 						
 					}
+					
+					
 						else
 						{
 							JOptionPane.showMessageDialog(new JFrame(),"Login has been Unsuccessfull");
@@ -140,6 +144,10 @@ public class Frame3 {
 		lblNewLabel.setBounds(119, -50, 98, 182);
 		panel_1.add(lblNewLabel);
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\shrikant padhy\\Desktop\\IMAGES\\Login-removebg-preview (1).png"));
+		
+		PasswordTextField = new JPasswordField();
+		PasswordTextField.setBounds(138, 176, 212, 32);
+		panel_1.add(PasswordTextField);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("C:\\Users\\shrikant padhy\\Desktop\\IMAGES\\Key2.png"));

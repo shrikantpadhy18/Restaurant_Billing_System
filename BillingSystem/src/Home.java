@@ -15,13 +15,14 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
+import javax.swing.JPasswordField;
 public class Home {
 	
 	private JFrame frame;
 	private JTextField NameTextField;
 	private JTextField TextFieldUserName;
-	private JTextField PasswordTextField;
-	private JTextField ConfirmPasswordField;
+	private JPasswordField PasswordTextField;
+	private JPasswordField ConfirmPasswordField;
 	
 	/**
 	 * Launch the application.
@@ -59,7 +60,7 @@ public class Home {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.ORANGE, 3, true));
-		panel.setBounds(36, 118, 776, 418);
+		panel.setBounds(31, 198, 776, 418);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -87,11 +88,6 @@ public class Home {
 		LabelPassword.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
 		LabelPassword.setBounds(12, 209, 112, 24);
 		panel.add(LabelPassword);
-		
-		PasswordTextField = new JTextField();
-		PasswordTextField.setBounds(225, 199, 285, 41);
-		panel.add(PasswordTextField);
-		PasswordTextField.setColumns(10);
 		
 		JLabel ConfirmPasswordLabel = new JLabel("ConfirmPassword");
 		ConfirmPasswordLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
@@ -128,7 +124,7 @@ public class Home {
 				        	
 				        	frame.setVisible(false);
 				        	LOGIN2 lo=new LOGIN2();
-				        	new LOGIN2().setVisible(true);
+				        	lo.frame.setVisible(true);
 				        	
 				        	
 				        	
@@ -164,11 +160,6 @@ public class Home {
 		RegisterButton.setBounds(138, 345, 128, 34);
 		panel.add(RegisterButton);
 		
-		ConfirmPasswordField = new JTextField();
-		ConfirmPasswordField.setBounds(225, 265, 285, 41);
-		panel.add(ConfirmPasswordField);
-		ConfirmPasswordField.setColumns(10);
-		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(522, 80, 234, 226);
 		panel.add(lblNewLabel);
@@ -197,6 +188,26 @@ public class Home {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(49, 0, 10, 10);
 		panel.add(panel_1);
+		
+		PasswordTextField = new JPasswordField();
+		PasswordTextField.setBounds(225, 200, 285, 41);
+		panel.add(PasswordTextField);
+		
+		ConfirmPasswordField = new JPasswordField();
+		ConfirmPasswordField.setBounds(225, 265, 285, 41);
+		panel.add(ConfirmPasswordField);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new LineBorder(Color.ORANGE, 3, true));
+		panel_2.setBounds(31, 46, 776, 134);
+		frame.getContentPane().add(panel_2);
+		panel_2.setLayout(null);
+		
+		JLabel lblRestaurantBillingSystem = new JLabel("Restaurant Billing System");
+		lblRestaurantBillingSystem.setForeground(Color.BLUE);
+		lblRestaurantBillingSystem.setFont(new Font("Arial", Font.BOLD, 36));
+		lblRestaurantBillingSystem.setBounds(133, 39, 517, 68);
+		panel_2.add(lblRestaurantBillingSystem);
 	}
 
 	protected void setVisible(boolean b) {
