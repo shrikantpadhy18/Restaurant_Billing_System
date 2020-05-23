@@ -45,7 +45,7 @@ public class AdminView1 {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.getContentPane().setForeground(Color.GREEN);
-		frame.getContentPane().setBackground(Color.GREEN);
+		frame.getContentPane().setBackground(Color.MAGENTA);
 		frame.setBounds(100, 100, 840, 615);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);

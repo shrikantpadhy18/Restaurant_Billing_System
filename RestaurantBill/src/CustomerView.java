@@ -5,6 +5,8 @@ import java.time.LocalTime;
 import java.time.ZonedDateTime;
   
 import java.sql.*;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -13,6 +15,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.List;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -31,8 +34,9 @@ public class CustomerView implements ItemListener{
 
 	JFrame frame;
 	 List list,list_1;
-	 String selected,customer1=null;
+	 String selected,customer1=null,select2;
 	 private JTextField CustomerTextField;
+	 private JTextField textFieldqty;
 
 	/**
 	 * Launch the application.
@@ -55,8 +59,11 @@ public class CustomerView implements ItemListener{
 		if(e.getSource()==list) {
 		 itemname=list.getSelectedItem();
 		}
+		
 		list_1.add(itemname);
+		select2=list.getSelectedItem();
 		selected=list_1.getSelectedItem();
+		
 	}
 
 	/**
@@ -80,7 +87,7 @@ public class CustomerView implements ItemListener{
 		panel.setBorder(new LineBorder(Color.GREEN, 1, true));
 		panel.setForeground(Color.LIGHT_GRAY);
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(41, 45, 915, 924);
+		panel.setBounds(31, 41, 915, 924);
 		frame.getContentPane().add(panel);
 		list = new List();
 		list.setBounds(40, 77, 159, 479);
@@ -154,7 +161,7 @@ public class CustomerView implements ItemListener{
 		 list_1.setFont(new Font("Dialog", Font.PLAIN, 20));
 		list.addItemListener(this);
 		list_1.addItemListener(this);
-		list_1.setBounds(23, 55, 143, 467);
+		list_1.setBounds(23, 66, 143, 467);
 		panel_2.add(list_1);
 		
 		JLabel LabelItemSelected = new JLabel("Selected_Items");
@@ -183,6 +190,8 @@ public class CustomerView implements ItemListener{
 			@SuppressWarnings({ "deprecation", "unused" })
 			public void actionPerformed(ActionEvent e) {
 				int sizs=list_1.getItemCount();
+				System.out.print("sizs");
+				System.out.print(sizs);
 				int flag=0,flag2=0;
 				String name;
 				
@@ -224,25 +233,27 @@ public class CustomerView implements ItemListener{
 				        // con = DriverManager.getConnection(url);
 				         stat = con.prepareStatement("insert into `order` values (?,?, ?, ?)");
 				         
-				         if(CustomerTextField.getText().length()>0)
+				         if(CustomerTextField.getText().length()>0 && textFieldqty.getText().length()>0)
 				         {
-				        	 
+				        	 int Qty=Integer.parseInt(textFieldqty.getText());
 				         
 				        stat.setInt(1,Integer.parseInt(CustomerTextField.getText()));
 				        System.out.println(Integer.parseInt(CustomerTextField.getText()));
 				        stat.setString(2,String.valueOf(name));
 				        System.out.println(String.valueOf(name));
-				        stat.setInt(3,origin.get(name));
+				        stat.setInt(3,Qty*origin.get(name));
 				        stat.setString(4,"pending");
 				       
 				    	
 				    	
 				        int ans=origin.get(name);
-				        map.put(name,ans+map.get(name));
+				        map.put(name,Qty*origin.get(name));
 				        System.out.println(map);
 				        
 						stat.executeUpdate();
 						 flag=1;
+						 
+						 
 				         }
 				         
 				         
@@ -253,15 +264,21 @@ public class CustomerView implements ItemListener{
 					
 					catch(Exception m)
 					{
-						flag=0;
-						break;
+						
 						
 					}
 					}
 					
 				}
 				if(flag==1 && flag2==1)
-				{
+				{	
+					
+					for(int i=0;i<sizs;i++) {
+						if(list_1.getItem(i).equals(select2)){
+							list_1.remove(select2);
+						}
+					}
+					
 					JOptionPane.showMessageDialog(new JFrame(),"Order Submitted Successfully");
 				}
 				else
@@ -324,35 +341,52 @@ public class CustomerView implements ItemListener{
 		btnLogout.setBounds(179, 758, 129, 36);
 		panel.add(btnLogout);
 		
+		JLabel Quantity = new JLabel("Enter The Quantity");
+		Quantity.setForeground(Color.MAGENTA);
+		Quantity.setFont(new Font("Times New Roman", Font.BOLD, 17));
+		Quantity.setBounds(47, 608, 166, 36);
+		panel.add(Quantity);
+		
+		textFieldqty = new JTextField();
+		textFieldqty.setBackground(Color.WHITE);
+		textFieldqty.setForeground(new Color(0, 0, 0));
+		textFieldqty.setBounds(209, 613, 207, 41);
+		panel.add(textFieldqty);
+		textFieldqty.setColumns(10);
+		
 		
 		
 		GenerateBill.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				
-				for (String name : map.keySet()) {  
+				Connection con;
+				int id=Integer.parseInt(CustomerTextField.getText());
+				String temp="";
+				try
+				{
 					
-		            map.put(name,map.get(name)-origin.get(name));
-		            }
-				float sum = 0.0f;
-				for (float f : map.values()) {
-				    sum += f;
-				}
 				
-				if(customer1!=null) {
-				String temp="CUSTOMER ID: "+CustomerTextField.getText()+"\n\nCUSTOMER NAME :"+customer1;
-				for (String name : map.keySet())  
-				{
-					if(map.get(name)>0)
-					temp=temp+"\n Food_Item_Name:"+name+"\nTotal price:"+String.valueOf(map.get(name));
+					Class.forName("com.mysql.jdbc.Driver");
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?characterEncoding=latin1", "root", "S@s12345");
+					Statement stat1=con.createStatement();
+					
+				   
+					ResultSet rs=(ResultSet) stat1.executeQuery("select payment_state,name,sum(price) as total from `order` where id='"+String.valueOf(id)+"'group by name");
+					int sum=0;
+					while(rs.next())
+					{
+						temp=temp+"\n\n"+rs.getString(1)+"__\n\n"+rs.getString(2)+" "+rs.getInt(3)+"/-Rs";
+						sum+=rs.getInt(3);
+					}
+						
+					temp=temp+"\n\nTOTAL="+String.valueOf(sum)+" /-Rs";
+					l3.setText(temp);
+					
 				}
-				temp=temp+"\n\n\n TOTAL_AMOUNT="+String.valueOf(sum)+"/-";
-				l3.setText(temp);
-				}
-				else
+				catch(Exception m)
 				{
-					JOptionPane.showMessageDialog(new JFrame(),"Please Enter The CustomerId");	
+					
 				}
 				
 			}
