@@ -23,42 +23,42 @@ C)UPDATE THE PAYMENT STATUS AFTER THE BILL IS PAID
 <hr>
 <h1>Images<h1><br>
 
-<img src="./Restaurant_Billing_System/BillingImage/RegisterCustomer.jpg">
+<img src="../BillingImage/RegisterCustomer.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/loginframe.jpg">
+<img src="../BillingImage/loginframe.jpg">
 
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/logintype.jpg">
+<img src="../BillingImage/logintype.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/aflogin.jpg">
+<img src="../BillingImage/aflogin.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/custview.jpg">
+<img src="../BillingImage/custview.jpg">
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/custmenu.jpg">
+<img src="../BillingImage/custmenu.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/itemselected.jpg">
+<img src="../BillingImage/itemselected.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/orderitem.jpg">
+<img src="../BillingImage/orderitem.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/additem.jpg">
+<img src="../BillingImage/additem.jpg">
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/adminview.jpg">
+<img src="../BillingImage/adminview.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/addfunctions.jpg">
+<img src="../BillingImage/addfunctions.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/additem.jpg">
+<img src="..BillingImage/additem.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/updatepayment.jpg">
+<img src="../BillingImage/updatepayment.jpg">
 
 <br>
-<img src="./Restaurant_Billing_System/BillingImage/viewpayment.jpg">
+<img src="../BillingImage/viewpayment.jpg">
